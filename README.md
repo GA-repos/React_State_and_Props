@@ -2,7 +2,7 @@
 
 # React State
 
-In React, we can't change the values in props object.  They are meant to be **immutable**. So, if we can't change the value in a props object how do we update our page?  The answer is: **State**.
+In React, we can't change the values in props object. They are meant to be **immutable**. So, if we can't change the value in a props object how do we update our page? The answer is: **State**.
 
 ## Learning Objectives
 
@@ -15,13 +15,20 @@ In React, we can't change the values in props object.  They are meant to be **im
 
 In computer science terms, we descibe systems as stateful if they are designed to remember preceding events or user interactions; the remembered information is called the **state** of the system.
 
-So far in this program, we used an imperative model of programming.  React uses a declarative style of programming.  **_Declarative programming_** is like describing a picture, whereas **_imperative programming_** is like a set of instructions for painting that picture. React enables us to design views for each **state** in our application, and it handles efficiently updating and rendering views when our data changes.
+So far in this program, we used an imperative model of programming. React uses a declarative style of programming. **_Declarative programming_** is like describing a picture, whereas **_imperative programming_** is like a set of instructions for painting that picture. React enables us to design views for each **state** in our application, and it handles efficiently updating and rendering views when our data changes.
 
-## Class-based Components
+## Class-based vs. Function Components with Hooks
 
-In order to use state in a React component, we need to use a different syntax for our component.  Fortunately, it's a syntax that you've seen before.  Stateful components use ES6 **class** syntax.
+In order to use state in a React component, there are two different syntaxes that can be used:
 
-Let's change up the state of our App component so it can be a stateful component together.
+1. ES6 **class** syntax
+1. Function components with hooks
+
+There are differences in the way each of these behaves and looks. Originally when React was created there was only class syntax. Over the years, as React became more comprehensive and the base grew, some challenges with this syntax became more evident. For one, it's harder to test using test automation tools that existed in the industry and it was also harder for humans to reason about class-based components. As a result, the React team and community rethought the approach and came up with **Hooks** as an alternative.
+
+Hooks were introduced in version 16.8 in February 2019. Today, much of the new code that is written in React uses hooks, but there's **a lot** of legacy code (and tutorials) that still exists using the class syntax, and some people still prefer to write their new code using it. We're going to focus on hooks in this program because most people find it a lot easier to work with and learn.
+
+### We Do: Add State to a Component
 
 ### We Do: Class Components
 
@@ -59,24 +66,28 @@ Let's break this down:
 This imports React methods from the React library just like we did in our stateless function components.
 
 #### `class App`
+
 This is the component we're creating. In this example, we are creating a component and calling it "App."
 
 #### `extends React.Component`
+
 We inherit from the Component React library class to create our component definitions. Here, we are creating a new Component subclass called App.
 
 Because it extends (inherits from) Component, our App class gets to reuse code and capabilities from `React.Component`.
 
 #### `render()`
+
 Every component has a render method. The render method is what renders the component to the screen, so it controls what is displayed for this component. From this function, we return what we want to display, just like we did in the body of our stateless function components.
 
 #### `export default App`
-This exposes the App class to other files, in this case, our index.js file.  Here again, there's no difference from the export used previous when App was a stateless function component.
+
+This exposes the App class to other files, in this case, our index.js file. Here again, there's no difference from the export used previous when App was a stateless function component.
 
 Make sure that your app still renders!
 
 ## Adding State
 
-In React, we define the state of our component inside the constructor.  Let's add that now:
+In React, we define the state of our component inside the constructor. Let's add that now:
 
 ```js
 constructor(props) {
@@ -87,15 +98,15 @@ constructor(props) {
 }
 ```
 
-We've defined our state object and we've added a property for movies.  We're setting the initial value for the movies property to equal the movies array we imported earlier that's stored in memory.
+We've defined our state object and we've added a property for movies. We're setting the initial value for the movies property to equal the movies array we imported earlier that's stored in memory.
 
 Check the results in the browser and make sure nothing has changed.
 
 ## Listening for User Interactions
 
-In the past when we wanted to listen for an event, we created an event listener and attached it to an element in the DOM.  Remember though, we're not interacting directly with the DOM in React.  That's React's job.
+In the past when we wanted to listen for an event, we created an event listener and attached it to an element in the DOM. Remember though, we're not interacting directly with the DOM in React. That's React's job.
 
-With React's declarative programming model, when we want to listen for an event on an element we'll just attach the event handler directly to the element.  Let's add a button to the App component so we can see how this works.
+With React's declarative programming model, when we want to listen for an event on an element we'll just attach the event handler directly to the element. Let's add a button to the App component so we can see how this works.
 
 ```jsx
 <button onClick={() => alert('you clicked me')}>Click me</button>
@@ -107,15 +118,14 @@ Lets create method that will filter out any movies that the audience did not rat
 
 ```js
 filterMovies = () => {
- const filteredMovies = this.state.movies.filter(
-   movie => movie.audience_score >= 60
- );
- console.log(filteredMovies);
+  const filteredMovies = this.state.movies.filter(
+    (movie) => movie.audience_score >= 60
+  );
+  console.log(filteredMovies);
 };
-
 ```
 
-Cool! Now instead of just logging the value to the console, let's update the state!  To do this we **must** use a special method provided by React called `setState()`.  This method takes an object with the property to update set to the new value.  Replace the `console.log` in your `filteredMovies` method with:
+Cool! Now instead of just logging the value to the console, let's update the state! To do this we **must** use a special method provided by React called `setState()`. This method takes an object with the property to update set to the new value. Replace the `console.log` in your `filteredMovies` method with:
 
 ```js
 this.setState({ movies: filteredMovies });
@@ -162,7 +172,7 @@ function Header(props) {
 
 Create a function that uses `setState()` to set the movies property in state back to the movies that we have in memory.
 
-Test it inside of App first by making the "Click me" button reset the movie list.  Then, once it's working pass it as a prop to the Header component and make it so that when a user clicks on the "Now Playing" link, it displays all of the movies again.
+Test it inside of App first by making the "Click me" button reset the movie list. Then, once it's working pass it as a prop to the Header component and make it so that when a user clicks on the "Now Playing" link, it displays all of the movies again.
 
 ## Showing and Hiding Elements
 
@@ -171,17 +181,19 @@ Let's make a toggle so that we can show or hide our movie list. We need to creat
 ```jsx
 this.state = {
   movies: movies,
-  showMovieList: true
-}
+  showMovieList: true,
+};
 ```
 
 Now we'll wrap our Movies component in a JavaScript expression.
 
 ```jsx
-{this.state.showMovieList && <Movies movies={this.state.movies} />}
+{
+  this.state.showMovieList && <Movies movies={this.state.movies} />;
+}
 ```
 
-Check the browser to see if anything changed.  Now manually change the value of the `showMovieList` property to false and check the browser again.
+Check the browser to see if anything changed. Now manually change the value of the `showMovieList` property to false and check the browser again.
 
 ## You Do: Show and Hide Toggle
 
