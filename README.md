@@ -201,10 +201,17 @@ return (
 
 We can also pass state down as props. We'll create a friend list to see this in action.
 
+Create a Friend component that renders the following html:
+
+```html
+<li>A friend</li>
+```
+
 Now create a new component called Friends and add some state to it:
 
 ```jsx
 import React, { useState } from 'react';
+import Friend from './Friend';
 
 const Friends = () => {
   const [friends, setFriends] = useState(['Jen', 'Carlos', 'Esin', 'Tabitha']);
@@ -212,7 +219,7 @@ const Friends = () => {
   return (
     <ul>
       {friends.map((friend) => (
-        <li key={friend}>{friend}</li>
+        <Friend key={friend} friend={friend} />
       ))}
     </ul>
   );
@@ -222,6 +229,24 @@ export default Friends;
 ```
 
 Next import it into App.js and compose it in the App function's `return`.
+
+Cool let's get our friend's name to appear instead of "A Friend".
+
+<details>
+  <summary>Solution</summary>
+
+```jsx
+import React from 'react';
+
+//Cool! We can use destructing here too!
+const Friend = ({ friend }) => {
+  return <li>{friend}</li>;
+};
+
+export default Friend;
+```
+
+</details>
 
 Let's add a function now in Friend to change our friends array. Let's call it `unfriend`:
 
@@ -238,7 +263,7 @@ const Friends = () => {
     <>
       <ul>
         {friends.map((friend) => (
-          <li key={friend}>{friend}</li>
+          <Friend key={friend} friend={friend} />
         ))}
       </ul>
       <button onClick={unfriend}>Unfriend Someone</button>
@@ -248,6 +273,8 @@ const Friends = () => {
 
 export default Friends;
 ```
+
+Okay, this is cool, but let's make it so that we unfriend a specific friend when we click on them...
 
 ## Additional Resources
 
