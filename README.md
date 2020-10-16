@@ -157,65 +157,112 @@ Let's have our button toggle the showing state when it's clicked. How might we d
 ```
 </details>
 
-## Setting State from a Child Component
+Now we can use the data in state to make some changes to the page. Add a paragraph into the return of the App component:
 
-So this is really cool, but it'd be so cool if we could filter the movies when a user clicks on the **Must See Movies** in the Header component.
-
-We can do that by passing the `filterMovies` method to the Header component as a prop.
-
-```jsx
-<Header filterMovies={this.filterMovies} />
+```js
+return (
+  <main>
+    <p>Can you see me now?</p>
+    <button onClick={() => setShowing(!showing)}>Toggle State</button>
+  </main>
+);
 ```
 
-Now in our Header component let's use the method.
+We want the paragraph to only display when the `showing` state variable evaluates to true. There are many ways we can do this...
 
-```jsx
-function Header(props) {
-  return (
-    <header>
-      <h1>Reelz: The Movie App</h1>
-      <Welcome name="Jen" firstTime={false} />
-      <div>
-        <ul>
-          <li>Now Playing</li>
-          <li onClick={props.filterMovies}>Must See Movies</li>
-        </ul>
-      </div>
-    </header>
-  );
-}
+1. Use a logical &&:
+
+```js
+return (
+  <main>
+    {showing && <p>Can you see me now?</p>}
+    <button onClick={() => setShowing(!showing)}>Toggle State</button>
+  </main>
+);
 ```
 
-## You Do: Show All Movies
+2. Use a ternary:
 
-Create a function that uses `setState()` to set the movies property in state back to the movies that we have in memory.
+```js
+return <main>{showing ? <p>Can you see me now?</p> : null}</main>;
+```
 
-Test it inside of App first by making the "Click me" button reset the movie list. Then, once it's working pass it as a prop to the Header component and make it so that when a user clicks on the "Now Playing" link, it displays all of the movies again.
+3. Set an inline style:
 
-## Showing and Hiding Elements
+```js
+return (
+  <main>
+    <p style={{ showing ? display: 'none' : ''}}>Can you see me now?</p>
+  </main>
+)
+```
 
-Let's make a toggle so that we can show or hide our movie list. We need to create a new bit of state for this, so add to our state object in App:
+## Passing Down State as Props
+
+We can also pass state down as props. We'll create a friend list to see this in action:
+
+First let's create some state for our friend list in App:
 
 ```jsx
-this.state = {
-  movies: movies,
-  showMovieList: true,
+const [friends, setFriends] = useState(['Jen', 'Esin', 'Tabitha', 'Carlos']);
+```
+
+Now create a new component called Friends:
+
+```jsx
+import React from 'react';
+
+const Friends = (props) => {
+  return <ul>{props.friends}</ul>;
 };
+
+export default Friends;
 ```
 
-Now we'll wrap our Movies component in a JavaScript expression.
+Next import it into App.js and compose it in the App function's `return`. Don't forget to pass it the `friends` state variable.
+
+Hmmm... we can do better than that, let's map over the friends array and out put a new `li` for each one!
 
 ```jsx
-{
-  this.state.showMovieList && <Movies movies={this.state.movies} />;
-}
+import React from 'react';
+
+// So cool... we can use destructuring here too!!!
+const Friends = ({ friends }) => {
+  return (
+    <ul>
+      {friends.map((friend) => (
+        <li key={friend}>{friend}</li>
+      ))}
+    </ul>
+  );
+};
+
+export default Friends;
 ```
 
-Check the browser to see if anything changed. Now manually change the value of the `showMovieList` property to false and check the browser again.
+Better! Let's add a function now in App to change our friends array. Let's call it `unfriend`:
 
-## You Do: Show and Hide Toggle
+```js
+function App() {
 
-Create a method called `toggleMovies` so that it updates the state of `showMovieList` by toggling the value between `true` and `false`.
+  const [friends, setFriends] = useState(['Jen', 'Carlos', 'Esin', 'Tabitha']);
+
+  function unfriend() {
+    const newFriends = friends.slice(1);
+    setFriends(newFriends);
+  }
+
+  ...
+
+  return (
+    <main>
+       <button onClick={unfriend}>Unfriend Someone</button>
+       ...
+    </main>
+  )
+
+}
+```
 
 ## Additional Resources
 
