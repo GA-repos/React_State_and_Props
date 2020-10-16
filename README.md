@@ -276,6 +276,46 @@ export default Friends;
 
 Okay, this is cool, but let's make it so that we unfriend a specific friend when we click on them...
 
+<details>
+  <summary>Solution</summary>
+
+```jsx
+import React, { useState } from 'react';
+import Friend from './Friend';
+// So cool... we can use destructuring here too!!!
+const Friends = () => {
+  const [friends, setFriends] = useState(['Jen', 'Carlos', 'Esin', 'Tabitha']);
+  function unfriend(friendName) {
+    const newFriends = friends.filter((friend) => friend !== friendName);
+    setFriends(newFriends);
+  }
+  return (
+    <>
+      <ul>
+        {friends.map((friend) => (
+          <Friend key={friend} friend={friend} unfriend={unfriend} />
+        ))}
+      </ul>
+    </>
+  );
+};
+
+export default Friends;
+```
+
+```jsx
+import React from 'react';
+
+//Cool! We can use destructing here too!
+const Friend = ({ friend, unfriend }) => {
+  return <li onClick={() => unfriend(friend)}>{friend}</li>;
+};
+
+export default Friend;
+```
+
+</details>
+
 ## Additional Resources
 
 - [Visual Guide to State in React | Dave Ceddia](https://daveceddia.com/visual-guide-to-state-in-react/)
