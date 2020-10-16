@@ -199,35 +199,16 @@ return (
 
 ## Passing Down State as Props
 
-We can also pass state down as props. We'll create a friend list to see this in action:
+We can also pass state down as props. We'll create a friend list to see this in action.
 
-First let's create some state for our friend list in App:
-
-```jsx
-const [friends, setFriends] = useState(['Jen', 'Esin', 'Tabitha', 'Carlos']);
-```
-
-Now create a new component called Friends:
+Now create a new component called Friends and add some state to it:
 
 ```jsx
-import React from 'react';
+import React, { useState } from 'react';
 
-const Friends = (props) => {
-  return <ul>{props.friends}</ul>;
-};
+const Friends = () => {
+  const [friends, setFriends] = useState(['Jen', 'Carlos', 'Esin', 'Tabitha']);
 
-export default Friends;
-```
-
-Next import it into App.js and compose it in the App function's `return`. Don't forget to pass it the `friends` state variable.
-
-Hmmm... we can do better than that, let's map over the friends array and out put a new `li` for each one!
-
-```jsx
-import React from 'react';
-
-// So cool... we can use destructuring here too!!!
-const Friends = ({ friends }) => {
   return (
     <ul>
       {friends.map((friend) => (
@@ -240,28 +221,32 @@ const Friends = ({ friends }) => {
 export default Friends;
 ```
 
-Better! Let's add a function now in App to change our friends array. Let's call it `unfriend`:
+Next import it into App.js and compose it in the App function's `return`.
+
+Let's add a function now in Friend to change our friends array. Let's call it `unfriend`:
 
 ```js
-function App() {
+import React, { useState } from 'react';
 
+const Friends = () => {
   const [friends, setFriends] = useState(['Jen', 'Carlos', 'Esin', 'Tabitha']);
-
   function unfriend() {
     const newFriends = friends.slice(1);
     setFriends(newFriends);
   }
-
-  ...
-
   return (
-    <main>
-       <button onClick={unfriend}>Unfriend Someone</button>
-       ...
-    </main>
-  )
+    <>
+      <ul>
+        {friends.map((friend) => (
+          <li key={friend}>{friend}</li>
+        ))}
+      </ul>
+      <button onClick={unfriend}>Unfriend Someone</button>
+    </>
+  );
+};
 
-}
+export default Friends;
 ```
 
 ## Additional Resources
