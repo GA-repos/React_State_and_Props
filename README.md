@@ -11,133 +11,151 @@ In React, we can't change the values in props object. They are meant to be **imm
 - Modify the state of a React component through events.
 - Distinguish container and presentational components.
 
+## Set Up
+
+1. Change into your sei directory with `cd ~/sei/sandbox`
+1. Once you're in the **sandbox** directory, type `npx create-react-app react-state` and press enter.
+1. After it's completed and you're returned to the prompt, type `cd react-state` to switch into the project directory.
+1. Open the application in VS Code by typing `code .`.
+1. In VS Code, click the run button next to the **start** script in the NPM SCRIPTS area of the Explorer pane **_or_** from the Terminal, type `npm start` to launch the development server.
+
 ## Framing
 
 In computer science terms, we descibe systems as stateful if they are designed to remember preceding events or user interactions; the remembered information is called the **state** of the system.
 
 So far in this program, we used an imperative model of programming. React uses a declarative style of programming. **_Declarative programming_** is like describing a picture, whereas **_imperative programming_** is like a set of instructions for painting that picture. React enables us to design views for each **state** in our application, and it handles efficiently updating and rendering views when our data changes.
 
+With React, we give up the control of changing the user interface (UI) to React. Let's consider an example in vanilla JavaScript:
+
+```js
+if (gameOver === true) {
+  const restart = document.querySelector('#restart');
+  restart.style.display = 'inline-block';
+} else {
+  restart.style.display = 'none';
+}
+```
+
+In React, we describe how React should render the UI based on the current data and conditions that exist:
+
+```jsx
+// ...
+return (
+  {gameOver ? <button onClick={restartGame}>Restart</button> : null}
+)
+```
+
+The game being over is one _state_ our game can be in. We know it's in this state when the `gameOver` variable evaluates to `true`. In that case, we want React to render the button. If the game isn't over, we can render something else or nothing at all.
+
+## Changing the State
+
+Up to now, we've seen that we can use props to pass data into components. The components in turn, can use that data when rendering content to the page. What we haven't seen is how to make the pages dynamically change based on user interactions or some other event. Since the props object cannot be changed in React once it's rendered, our app has been completely static.
+
+To make our app dynamic we need to designate some data as state because the only way to tell React to update the page is to change the data that's in state. Any components that are dependent upon state data &mdash; including any props that are passed state data &mdash; will be rerendered automatically if the state they are dependent upon changes.
+
+![Diagram showing how state changes cause components to rerender](https://media.git.generalassemb.ly/user/17300/files/39d10a00-0f85-11eb-91a2-afabd530b7c8)
+
 ## Class-based vs. Function Components with Hooks
 
-In order to use state in a React component, there are two different syntaxes that can be used:
+In order to designate some data as state in a React component, there are two different syntaxes that can be used:
 
 1. ES6 **class** syntax
 1. Function components with hooks
 
-There are differences in the way each of these behaves and looks. Originally when React was created there was only class syntax. Over the years, as React became more comprehensive and the base grew, some challenges with this syntax became more evident. For one, it's harder to test using test automation tools that existed in the industry and it was also harder for humans to reason about class-based components. As a result, the React team and community rethought the approach and came up with **Hooks** as an alternative.
+There are differences in the way each of these behaves and looks. Originally when React was created there was only class syntax. Over the years, as React became more comprehensive and as the base grew, some challenges with this syntax became more evident. For one, class syntax was harder to test using test automation tools that existed in the industry. Many people also argued that it was harder for humans to reason about class-based components, particularly since classes themselves were new to Javascript. As a result, the React team and community rethought the approach and came up with **Hooks** as an alternative.
 
 Hooks were introduced in version 16.8 in February 2019. Today, much of the new code that is written in React uses hooks, but there's **a lot** of legacy code (and tutorials) that still exists using the class syntax, and some people still prefer to write their new code using it. We're going to focus on hooks in this program because most people find it a lot easier to work with and learn.
 
 ### We Do: Add State to a Component
 
-### We Do: Class Components
-
-We're going to change the App from a stateless function component to a class component, we need to:
-
-1. Change the function declaration to a class declaration.
-1. Use `extends` to inherit from `React.Component`.
-1. Wrap the return statement in a `render` method.
+Let's start by everything in App.js with the following:
 
 ```jsx
 import React from 'react';
-import './App.css';
-import { movies } from './Data';
-import Header from './Header';
-import Movies from './Movies';
 
-class App extends React.Component {
-  render() {
-    return (
-      <>
-        <Header />
-        <Movies movies={movies} />
-      </>
-    );
-  }
+function App() {
+  return (
+    <main>
+      <button>Toggle State</button>
+    </main>
+  );
 }
 
 export default App;
 ```
 
-Let's break this down:
+We should now have a very basic component that renders a button to the page.
 
-#### `import React from 'react'`
-
-This imports React methods from the React library just like we did in our stateless function components.
-
-#### `class App`
-
-This is the component we're creating. In this example, we are creating a component and calling it "App."
-
-#### `extends React.Component`
-
-We inherit from the Component React library class to create our component definitions. Here, we are creating a new Component subclass called App.
-
-Because it extends (inherits from) Component, our App class gets to reuse code and capabilities from `React.Component`.
-
-#### `render()`
-
-Every component has a render method. The render method is what renders the component to the screen, so it controls what is displayed for this component. From this function, we return what we want to display, just like we did in the body of our stateless function components.
-
-#### `export default App`
-
-This exposes the App class to other files, in this case, our index.js file. Here again, there's no difference from the export used previous when App was a stateless function component.
-
-Make sure that your app still renders!
-
-## Adding State
-
-In React, we define the state of our component inside the constructor. Let's add that now:
+Next, we're going to use the useState Hook to designate a piece of data as part of our application's state. To use this method (that's all a Hook is a method in the React class), we need to import it. We're going to also be importing it from the `react` package in our `node_modules` folder, so we'll change the first line of the App.js file to read:
 
 ```js
-constructor(props) {
-  super(props);
-  this.state = {
-    movies: movies
-  };
-}
+import React, { useState } from 'react';
 ```
 
-We've defined our state object and we've added a property for movies. We're setting the initial value for the movies property to equal the movies array we imported earlier that's stored in memory.
+This syntax is called **destructuring**. Destructuring is a cool JavaScript feature that let's us name parts of an array or object so that we don't have to use the dot notation. Let's take a quick look at it by watching this quick [video](https://www.youtube.com/watch?v=G4T2ZgJPKbw).
 
-Check the results in the browser and make sure nothing has changed.
+The way that we'll use the `useState` method in our code will also use destructuring. In this case, we'll be destructuring an array that is returned from useState. This array contains two elements. The first is the actual state data and the second is a method that allows us to change the data. Let's see the pattern:
+
+```jsx
+const [data, setData] = useState(initialState);
+```
+
+You can name the elements of the array anything that you like but it's convention to give the data element an intuitive and descriptive name as we have always done with our variables, and name the second element, the same as the first but with `set` prepended to the name. For example:
+
+```jsx
+const [movies, setMovies] = useState([]);
+
+const [gameOver, setGameOver] = useState(false);
+
+const [friends, setFriends] = useState([{ name: 'Tabitha' }, { name: 'Esin' }]);
+```
+
+We're going to only have one variable in our state right now, but you can add as many pieces of state as you need to a component.
+
+Add the following line to the `App` function **before** the `return`:
+
+```jsx
+import React, { useState } from 'react';
+
+function App() {
+  // Add state for showing:
+  const [showing, setShowing] = useState(true);
+
+  return (
+    <main>
+      <button>Toggle State</button>
+    </main>
+  );
+}
+
+export default App;
+```
+
+Cool! Now we have some state, but how can we tell? There's an app for that... Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) from the Chrome Extension Store.
 
 ## Listening for User Interactions
 
 In the past when we wanted to listen for an event, we created an event listener and attached it to an element in the DOM. Remember though, we're not interacting directly with the DOM in React. That's React's job.
 
-With React's declarative programming model, when we want to listen for an event on an element we'll just attach the event handler directly to the element. Let's add a button to the App component so we can see how this works.
+With React's declarative programming model, when we want to listen for an event on an element we'll just attach the event handler directly to the element. Let's see the pattern:
 
 ```jsx
-<button onClick={() => alert('you clicked me')}>Click me</button>
+function AlertButton() {
+  // Add the onClick and give it a callback function
+  return <button onClick={() => alert('You clicked me!')}>Click me</button>;
+}
 ```
 
 We can find a comprehensive list of all of the events React supports in the [docs](https://reactjs.org/docs/events.html#supported-events).
 
-Lets create method that will filter out any movies that the audience did not rate 60 or higher.
+Let's have our button toggle the showing state when it's clicked. How might we do that?
 
+<details>
+    <summary>Solution</summary>
 ```js
-filterMovies = () => {
-  const filteredMovies = this.state.movies.filter(
-    (movie) => movie.audience_score >= 60
-  );
-  console.log(filteredMovies);
-};
+<button onClick={() => setShowing(!showing)}>Toggle State</button>
 ```
-
-Cool! Now instead of just logging the value to the console, let's update the state! To do this we **must** use a special method provided by React called `setState()`. This method takes an object with the property to update set to the new value. Replace the `console.log` in your `filteredMovies` method with:
-
-```js
-this.setState({ movies: filteredMovies });
-```
-
-When the state is changed using `setState()`, React automatically kicks off a process that renders any of the affected components and their children! Thanks to the Virtual DOM it will only update the actual DOM when the data that is changed affects the specific component element.
-
-## State Summary
-
-- Stateful components must use class syntax.
-- State is updated by calling `setState()`.
-- State is locally scoped (within the class component where it is defined), but can be passed as props.
+</details>
 
 ## Setting State from a Child Component
 
