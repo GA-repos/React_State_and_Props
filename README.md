@@ -13,7 +13,7 @@ In React, we can't change the values in props object. They are meant to be **imm
 
 ## Set Up
 
-1. Change into your sei directory with `cd ~/sei/sandbox`
+1. Change into your sei directory for this class
 1. Once you're in the **sandbox** directory, type `npx create-react-app react-state` and press enter.
 1. After it's completed and you're returned to the prompt, type `cd react-state` to switch into the project directory.
 1. Open the application in VS Code by typing `code .`.
