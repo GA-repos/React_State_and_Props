@@ -38,6 +38,8 @@ if (gameOver === true) {
 
 In React, we describe how React should render the UI based on the current data and conditions that exist:
 
+Hey by the way, if you're not familiar with this ? operator in the code, it is known as a Ternary operator, and is basically a shorter way of writing If/Else statements. Here's a quick description from the web: "Ternary operator starts with conditional expression followed by ? operator. Second part ( after ? and before : operator) will be executed if condition turns out to be true. If condition becomes false then third part (after :) will be executed."
+
 ```jsx
 // ...
 return (
