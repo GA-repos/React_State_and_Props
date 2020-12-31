@@ -216,7 +216,7 @@ import React, { useState } from 'react';
 import Friend from './Friend';
 
 const Friends = () => {
-  const [friends, setFriends] = useState(['Jen', 'Carlos', 'Esin', 'Tabitha']);
+  const [friends, setFriends] = useState(['Jeremy', 'Will', 'Elektra', 'Tabitha']);
 
   return (
     <ul>
@@ -250,13 +250,13 @@ export default Friend;
 
 </details>
 
-Let's add a function now in Friend to change our friends array. Let's call it `unfriend`:
+Let's add a function now in Friends to change our friends array. Let's call it `unfriend`:
 
 ```js
 import React, { useState } from 'react';
 
 const Friends = () => {
-  const [friends, setFriends] = useState(['Jen', 'Carlos', 'Esin', 'Tabitha']);
+  const [friends, setFriends] = useState(['Jeremy', 'Will', 'Elektra', 'Tabitha']);
   function unfriend() {
     const newFriends = friends.slice(1);
     setFriends(newFriends);
@@ -286,7 +286,7 @@ import React, { useState } from 'react';
 import Friend from './Friend';
 // So cool... we can use destructuring here too!!!
 const Friends = () => {
-  const [friends, setFriends] = useState(['Jen', 'Carlos', 'Esin', 'Tabitha']);
+  const [friends, setFriends] = useState(['Jeremy', 'Will', 'Elektra', 'Tabitha']);
   function unfriend(friendName) {
     const newFriends = friends.filter((friend) => friend !== friendName);
     setFriends(newFriends);
