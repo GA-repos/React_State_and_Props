@@ -77,9 +77,9 @@ import React from 'react';
 
 function App() {
   return (
-    <main>
+    <div className="main>
       <button>Toggle State</button>
-    </main>
+    </div>
   );
 }
 
@@ -109,7 +109,7 @@ const [movies, setMovies] = useState([]);
 
 const [gameOver, setGameOver] = useState(false);
 
-const [friends, setFriends] = useState([{ name: 'Tabitha' }, { name: 'Esin' }]);
+const [friends, setFriends] = useState([{ name: 'Tabitha' }, { name: 'Will' }]);
 ```
 
 We're going to only have one variable in our state right now, but you can add as many pieces of state as you need to a component.
@@ -124,9 +124,9 @@ function App() {
   const [showing, setShowing] = useState(true);
 
   return (
-    <main>
+    <div className="main">
       <button>Toggle State</button>
-    </main>
+    </div>
   );
 }
 
@@ -163,10 +163,10 @@ Now we can use the data in state to make some changes to the page. Add a paragra
 
 ```js
 return (
-  <main>
+  <div className="main">
     <p>Can you see me now?</p>
     <button onClick={() => setShowing(!showing)}>Toggle State</button>
-  </main>
+  </div>
 );
 ```
 
@@ -176,26 +176,26 @@ We want the paragraph to only display when the `showing` state variable evaluate
 
 ```js
 return (
-  <main>
+ <div className="main">
     {showing && <p>Can you see me now?</p>}
     <button onClick={() => setShowing(!showing)}>Toggle State</button>
-  </main>
+  </div>
 );
 ```
 
 2. Use a ternary:
 
 ```js
-return <main>{showing ? <p>Can you see me now?</p> : null}</main>;
+return <div>{showing ? <p>Can you see me now?</p> : null}</div>;
 ```
 
 3. Set an inline style:
 
 ```js
 return (
-  <main>
+  <div>
     <p style={{ showing ? display: 'none' : ''}}>Can you see me now?</p>
-  </main>
+  </div>
 )
 ```
 
