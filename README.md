@@ -154,8 +154,12 @@ Let's have our button toggle the showing state when it's clicked. How might we d
 
 <details>
     <summary>Solution</summary>
-```js
+    
+```jsx
+
 <button onClick={() => setShowing(!showing)}>Toggle State</button>
+
+
 ```
 </details>
 
