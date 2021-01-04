@@ -24,7 +24,7 @@ In React, we can't change the values in props object. They are meant to be **imm
 In computer science terms, we descibe systems as stateful if they are designed to remember preceding events or user interactions; the remembered information is called the **state** of the system.
 
 So far in this program, we used an imperative model of programming. React uses a declarative style of programming. **_Declarative programming_** is like describing a picture, whereas **_imperative programming_** is like a set of instructions for painting that picture. React enables us to design views for each **state** in our application, and it handles efficiently updating and rendering views when our data changes.
-
+ 
 With React, we give up the control of changing the user interface (UI) to React. Let's consider an example in vanilla JavaScript:
 
 ```js
@@ -62,7 +62,7 @@ To make our app dynamic we need to designate some data as state because the only
 In order to designate some data as state in a React component, there are two different syntaxes that can be used:
 
 1. ES6 **class** syntax
-1. Function components with hooks
+2. Function components with hooks
 
 There are differences in the way each of these behaves and looks. Originally when React was created there was only class syntax. Over the years, as React became more comprehensive and as the base grew, some challenges with this syntax became more evident. For one, class syntax was harder to test using test automation tools that existed in the industry. Many people also argued that it was harder for humans to reason about class-based components, particularly since classes themselves were new to Javascript. As a result, the React team and community rethought the approach and came up with **Hooks** as an alternative.
 
@@ -94,7 +94,7 @@ Next, we're going to use the useState Hook to designate a piece of data as part 
 import React, { useState } from 'react';
 ```
 
-This syntax is called **destructuring**. Destructuring is a cool JavaScript feature that let's us name parts of an array or object so that we don't have to use the dot notation. Let's take a quick look at it by watching this quick [video](https://www.youtube.com/watch?v=G4T2ZgJPKbw).
+This syntax is called **destructuring**. Destructuring is a cool JavaScript feature that lets us name parts of an array or object so that we don't have to use the dot notation. Let's take a quick look at it by watching this quick [video](https://www.youtube.com/watch?v=G4T2ZgJPKbw).
 
 The way that we'll use the `useState` method in our code will also use destructuring. In this case, we'll be destructuring an array that is returned from useState. This array contains two elements. The first is the actual state data and the second is a method that allows us to change the data. Let's see the pattern:
 
