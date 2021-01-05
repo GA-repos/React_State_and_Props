@@ -198,7 +198,7 @@ return <div>{showing ? <p>Can you see me now?</p> : null}</div>;
 ```js
 return (
   <div>
-    <p style={{ showing ? display: 'none' : ''}}>Can you see me now?</p>
+    <p style={{ showing ? {display: 'none'} : {display:'block'}}}>Can you see me now?</p>
   </div>
 )
 ```
