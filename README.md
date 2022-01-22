@@ -2,7 +2,7 @@
 
 # React State
 
-In React, we can't change the values in the props object. They are meant to be **immutable**. So, if we can't change the value in a props object how do we update our page? The answer is: **State**.
+In React, we can't change the values in the props object. They are meant to be **immutable**. So, if we can't change the value in a props object how do we update our page? The answer is _state_.
 
 ## Learning Objectives
 
