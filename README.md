@@ -2,7 +2,7 @@
 
 # React State
 
-In React, we can't change the values in props object. They are meant to be **immutable**. So, if we can't change the value in a props object how do we update our page? The answer is: **State**.
+In React, we can't change the values in the props object. They are meant to be **immutable**. So, if we can't change the value in a props object how do we update our page? The answer is: **State**.
 
 ## Learning Objectives
 
@@ -77,7 +77,7 @@ import React from 'react';
 
 function App() {
   return (
-    <div className="main>
+    <div className="main">
       <button>Toggle State</button>
     </div>
   );
