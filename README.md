@@ -109,7 +109,7 @@ const [movies, setMovies] = useState([]);
 
 const [gameOver, setGameOver] = useState(false);
 
-const [friends, setFriends] = useState([{ name: 'Tabitha' }, { name: 'Will' }]);
+const [friends, setFriends] = useState([{ name: 'Billie' }, { name: 'Kareem' }]);
 ```
 
 We're going to only have one variable in our state right now, but you can add as many pieces of state as you need to a component.
@@ -220,7 +220,7 @@ import React, { useState } from 'react';
 import Friend from './Friend';
 
 const Friends = () => {
-  const [friends, setFriends] = useState(['Jeremy', 'Will', 'Elektra', 'Tabitha']);
+  const [friends, setFriends] = useState(['Billie', 'Kareem', 'Andrew', 'Justin', 'Max', 'Hisham']);
 
   return (
     <ul>
@@ -260,7 +260,7 @@ Let's add a function now in Friends to change our friends array. Let's call it `
 import React, { useState } from 'react';
 
 const Friends = () => {
-  const [friends, setFriends] = useState(['Jeremy', 'Will', 'Elektra', 'Tabitha']);
+  const [friends, setFriends] = useState(['Billie', 'Kareem', 'Andrew', 'Justin', 'Max', 'Hisham']);
   function unfriend() {
     const newFriends = friends.slice(1);
     setFriends(newFriends);
@@ -290,7 +290,7 @@ import React, { useState } from 'react';
 import Friend from './Friend';
 // So cool... we can use destructuring here too!!!
 const Friends = () => {
-  const [friends, setFriends] = useState(['Jeremy', 'Will', 'Elektra', 'Tabitha']);
+  const [friends, setFriends] = useState(['Billie', 'Kareem', 'Andrew', 'Justin', 'Max', 'Hisham']);
   function unfriend(friendName) {
     const newFriends = friends.filter((friend) => friend !== friendName);
     setFriends(newFriends);
